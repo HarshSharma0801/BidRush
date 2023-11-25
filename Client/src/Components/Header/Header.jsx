@@ -18,6 +18,29 @@ const Header = () => {
     dispatch(CartUIActions.CartUIShow());
   };
 
+  const IsUser = () => {
+    const data = JSON.parse(localStorage.getItem("UserInfo"));
+    if (data) {
+      const token = data.access;
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const config = {
+        headers: headers,
+      };
+
+      axios.get("/Token", config).then((res) => {
+        if (res.data.valid) {
+         navigate('/auction')
+        } else {
+          navigate('/signin')
+        }
+      });
+    } else {
+      navigate('/signin')
+    }
+  };
+
   useEffect(() => {
     const getUser = () => {
       const data = JSON.parse(localStorage.getItem("UserInfo"));
@@ -134,9 +157,7 @@ const Header = () => {
         <div className=" hidden md:flex gap-8 p-2 items-center text-center justify-center">
           <div className="text-lg flex-[0.15]">
             <button
-              onClick={() => {
-                navigate("/auction");
-              }}
+              onClick={IsUser}
               className="p-2 border border-white rounded-xl text-white hover:text-black hover:bg-white"
             >
               Auction

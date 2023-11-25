@@ -6,17 +6,33 @@ import Loader from "../Loader/Loader";
 import { useDispatch } from "react-redux";
 import { CartSliceActions } from "../Context/reducers/CartSlice";
 import { useNavigate } from "react-router";
+import { loadStripe } from "@stripe/stripe-js";
 
 const SingleItem = () => {
   const Itemid = useParams();
   const navigate = useNavigate()
   const [load, setload] = useState(true);
   const [Item, setItem] = useState();
+  const [User,SetUser] = useState();
   const dispatch  = useDispatch();
+  const [OrderDetails , setOrderDetails] = useState(
+    {  
+      name:'',
+      price:'',
+      image:'',
+      quantity:''
+  }
+  )
   const getItem = async (id) => {
     axios.get(`/singleitem/${id}`).then((res) => {
  
       setItem(res.data.item);
+      setOrderDetails({
+        name:res.data.item.ItemName,
+        price:res.data.item.price,
+        image:res.data.item.Images[0],
+        quantity:1
+      })
       setload(false);
     });
   };
@@ -27,7 +43,7 @@ const SingleItem = () => {
 
   const getUser = async()=>{
     const data = JSON.parse(localStorage.getItem("UserInfo"));
-    if (data) {
+    if (data ) {
       const token = data.access;
       const headers = {
         Authorization: `Bearer ${token}`,
@@ -38,8 +54,10 @@ const SingleItem = () => {
       await axios.get('/Token' , config).then(res=>{
         if(!res.data.valid){
           navigate('/signin');
+          SetUser(false);
         }
         else{
+          SetUser(true)
           dispatch(CartSliceActions.AddtoCart({
             name:Item && Item.ItemName,
             price:Item && Item.price,
@@ -56,6 +74,59 @@ const SingleItem = () => {
      getUser();
    
   }
+  const [isValid, SetisValid] = useState(false);
+ 
+  const BookClicked = async()=>{
+    const data = JSON.parse(localStorage.getItem("UserInfo"));
+if(data && OrderDetails){
+
+  await axios.post("/Booking", OrderDetails).then((res) => {
+    if (res.data.valid) {
+      SetisValid(true);
+    }
+    let booking = res.data.OrderToken;
+    localStorage.setItem("OrderToken" , booking)
+  });
+}
+else{
+  navigate('/singin')
+}
+  
+
+    MakePayment();
+
+  }
+
+
+  const MakePayment = async()=>{
+  
+      const stripe = await loadStripe(
+        "pk_test_51NnoXmSFHehR7P6bVlnz2V2A5VkVFjJYd8Veu7SZNvQYvT35zXs2f9e4dKHu6iyIJkm0uXc1rKjjjq0ksiWBEagA00hLiQAEzM"
+      );
+      const Paybody = {
+        name: Item && Item.ItemName,
+        amount: Item && Item.price,
+        
+      };
+
+      try {
+        await axios
+          .post("/Payment", { Pay: Paybody, Book: OrderDetails })
+          .then((res) => {
+           
+              const result = stripe.redirectToCheckout({
+                sessionId: res.data.id,
+              });
+              if (result.error) {
+                console.log(result.error);
+              }
+            
+          });
+      } catch (error) {
+        console.error(error);
+      }
+    }
+  
 
 
 
@@ -131,7 +202,7 @@ const SingleItem = () => {
         </div>
         <div className="flex justify-center items-center gap-4">
           <div className="py-3">
-            <button className="p-3 px-6 text-xl bg-lightdark text-black rounded-xl ">
+            <button onClick={BookClicked} className="p-3 px-6 text-xl bg-lightdark text-black rounded-xl ">
                 Buy Now
             </button>
           </div>

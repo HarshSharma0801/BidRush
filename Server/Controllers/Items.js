@@ -99,6 +99,31 @@ Items.get('/singleitem/:id' , async(req,res)=>{
   }
 })
 
+
+Items.get('/youritem' , AuthenticateToken , async(req,res)=>{
+
+  const OwnerId  = req.user.ExistingUser._id ;
+
+  try {
+    const data = await Item.find({Owner:OwnerId});
+    res.status(200).json({valid:true , items:data});
+    
+  } catch (error) {
+    console.log(error)
+  }
+})
+
+Items.post('/deleteitem' , async(req,res)=>{
+
+  try {
+      const id = req.body.id;
+      await Item.deleteOne({_id:id});
+      res.status(200).json({valid:true})
+  } catch (error) {
+      console.error(error);
+  }
+})
+
 export default Items
 
 

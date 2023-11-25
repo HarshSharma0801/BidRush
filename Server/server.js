@@ -8,6 +8,11 @@ import Auth from './Controllers/Auth.js'
 import Items from './Controllers/Items.js'
 import SaveCart from './Controllers/Cart.js'
 import StartSocket from './Controllers/Socket.js';
+import Auction from './Controllers/AuctionItems.js';
+import Payment from './Controllers/StripePayment.js';
+import OrderItem from './Controllers/Order.js';
+
+
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -40,6 +45,10 @@ app.use(express.json({
     app.use(Auth);
     app.use(Items);
     app.use(SaveCart);
+    app.use(Auction);
+    app.use(OrderItem);
+    app.use(Payment);
+
 
 
     const server = http.createServer(app);

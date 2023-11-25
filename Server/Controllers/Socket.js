@@ -10,9 +10,7 @@ const StartSocket = (server)=>{
   });
 
   io.on('connection', (socket) => {
-    console.log("user connect")
     socket.on('customEvent', (data) => {
-        console.log(data);
         socket.broadcast.emit('changedBid' , data)
         
       });
