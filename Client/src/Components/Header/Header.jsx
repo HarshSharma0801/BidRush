@@ -3,20 +3,20 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { CartUIActions } from "../Context/reducers/CartUI";
-import {  useSelector } from "react-redux/es/hooks/useSelector"
-import Loader from '../Loader/Loader'
+import { useSelector } from "react-redux/es/hooks/useSelector";
+import Loader from "../Loader/Loader";
 import { CartSliceActions } from "../Context/reducers/CartSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isData, setisData] = useState();
-  const [load,setload] = useState(true);
+  const [load, setload] = useState(true);
   const [User, SetUser] = useState();
-  const TotalItems = useSelector(state=>state.CartSlice.totalItems);
-  const CartClicked = ()=>{
-     dispatch(CartUIActions.CartUIShow())
-  }
+  const TotalItems = useSelector((state) => state.CartSlice.totalItems);
+  const CartClicked = () => {
+    dispatch(CartUIActions.CartUIShow());
+  };
 
   useEffect(() => {
     const getUser = () => {
@@ -46,13 +46,11 @@ const Header = () => {
     getUser();
   }, []);
 
-
-  useEffect(()=>{
-
-    const getCart = ()=>{
-      setTimeout(()=>{
+  useEffect(() => {
+    const getCart = () => {
+      setTimeout(() => {
         setload(false);
-      },1200)
+      }, 1200);
       const data = JSON.parse(localStorage.getItem("UserInfo"));
       if (data) {
         const token = data.access;
@@ -61,31 +59,27 @@ const Header = () => {
         };
         const config = {
           headers: headers,
-        }
+        };
         axios.get("/getcart", config).then((res) => {
           if (res.data.valid) {
             const data = res.data.cart;
-            dispatch(CartSliceActions.setInitialData({
-              items:data.Items,
-              totalItems:data.TotalItems,
-              totalPrice:data.TotalPrice
-            }))
-          } 
+            dispatch(
+              CartSliceActions.setInitialData({
+                items: data.Items,
+                totalItems: data.TotalItems,
+                totalPrice: data.TotalPrice,
+              })
+            );
+          }
         });
-      
-      
-      };
-    
-
-
-    }
+      }
+    };
     getCart();
-
-  },[])
+  }, []);
 
   return (
     <>
-    {load && <Loader/>}
+      {load && <Loader />}
       <div className="flex justify-between md:justify-around items-center  w-[100%] text-white bg-black p-4 ">
         <div>
           <h1
@@ -138,10 +132,21 @@ const Header = () => {
         </div>
 
         <div className=" hidden md:flex gap-8 p-2 items-center text-center justify-center">
-          <div className="text-xl flex-[0.15]">Bids</div>
+          <div className="text-lg flex-[0.15]">
+            <button
+              onClick={() => {
+                navigate("/auction");
+              }}
+              className="p-2 border border-white rounded-xl text-white hover:text-black hover:bg-white"
+            >
+              Auction
+            </button>{" "}
+          </div>
           <div className=" flex-[0.15">
-           
-            <button onClick={CartClicked} className="border flex p-3 rounded-full hover:bg-white hover:text-black border-white">
+            <button
+              onClick={CartClicked}
+              className="border flex p-3 rounded-full hover:bg-white hover:text-black border-white"
+            >
               <span>
                 {" "}
                 <svg
@@ -159,7 +164,9 @@ const Header = () => {
                   />
                 </svg>
               </span>
-              <span className="rounded-[30px] text-black bg-white  px-[1rem]">{TotalItems}</span>
+              <span className="rounded-[30px] text-black bg-white  px-[1rem]">
+                {TotalItems}
+              </span>
             </button>
           </div>
 

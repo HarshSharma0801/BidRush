@@ -8,6 +8,7 @@ import AddItem from "./Components/AddItem/AddItem"
 import SingleItem from "./Components/SingleItem/SingleItem"
 import Cart from "./Components/Header/cart"
 import {  useSelector } from "react-redux/es/hooks/useSelector"
+import Auction from "./Components/Auction/Auction"
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
    <Route path="/item/:id" element={<SingleItem/>} />
 
    <Route path="/account/additem" element={<AddItem/>} />
+   <Route path="/auction" element={<Auction/>} />
 
 
 

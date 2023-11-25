@@ -2,10 +2,12 @@ import 'dotenv/config'
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import http from 'http';
 import bodyParser from 'body-parser'
 import Auth from './Controllers/Auth.js'
 import Items from './Controllers/Items.js'
 import SaveCart from './Controllers/Cart.js'
+import StartSocket from './Controllers/Socket.js';
 const app = express();
 
 const PORT = process.env.PORT || 3000;
@@ -40,6 +42,10 @@ app.use(express.json({
     app.use(SaveCart);
 
 
-    app.listen(PORT , ()=>{
+    const server = http.createServer(app);
+
+    StartSocket(server);
+
+    server.listen(PORT , ()=>{
         console.log(`Server is running on ${PORT}`)
     })

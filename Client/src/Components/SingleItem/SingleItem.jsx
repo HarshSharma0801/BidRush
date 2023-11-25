@@ -5,14 +5,17 @@ import axios from "axios";
 import Loader from "../Loader/Loader";
 import { useDispatch } from "react-redux";
 import { CartSliceActions } from "../Context/reducers/CartSlice";
+import { useNavigate } from "react-router";
 
 const SingleItem = () => {
   const Itemid = useParams();
+  const navigate = useNavigate()
   const [load, setload] = useState(true);
   const [Item, setItem] = useState();
   const dispatch  = useDispatch();
   const getItem = async (id) => {
     axios.get(`/singleitem/${id}`).then((res) => {
+ 
       setItem(res.data.item);
       setload(false);
     });
@@ -22,14 +25,36 @@ const SingleItem = () => {
     getItem(Itemid.id);
   }, []);
 
+  const getUser = async()=>{
+    const data = JSON.parse(localStorage.getItem("UserInfo"));
+    if (data) {
+      const token = data.access;
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const config = {
+        headers: headers,
+      };
+      await axios.get('/Token' , config).then(res=>{
+        if(!res.data.valid){
+          navigate('/signin');
+        }
+        else{
+          dispatch(CartSliceActions.AddtoCart({
+            name:Item && Item.ItemName,
+            price:Item && Item.price,
+            id:Itemid.id,
+            image:Item && Item.Images[0]
+           }))
+        }
+      })
+    }
+   
+  }
 
   const AddToCart = ()=>{
-     dispatch(CartSliceActions.AddtoCart({
-      name:Item && Item.ItemName,
-      price:Item && Item.price,
-      id:Itemid.id,
-      image:Item && Item.Images[0]
-     }))
+     getUser();
+   
   }
 
 
