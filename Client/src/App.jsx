@@ -9,7 +9,9 @@ import SingleItem from "./Components/SingleItem/SingleItem"
 import Cart from "./Components/Header/cart"
 import {  useSelector } from "react-redux/es/hooks/useSelector"
 import Auction from "./Components/Auction/Auction"
-
+import YourItems from "./Components/YourItems/YourItems"
+import Success from "./Components/Pages/success"
+import YourOrders from "./Components/YourOrders/YourOrders"
 function App() {
 
   axios.defaults.baseURL = "http://localhost:5000/"
@@ -27,7 +29,12 @@ function App() {
    <Route path="/item/:id" element={<SingleItem/>} />
 
    <Route path="/account/additem" element={<AddItem/>} />
+   <Route path="/account/yourItem" element={<YourItems/>}/>
+   <Route path="/account/yourorders" element={<YourOrders/>}/>
+
    <Route path="/auction" element={<Auction/>} />
+   <Route path="/success" element={<Success/>} />
+
 
 
 

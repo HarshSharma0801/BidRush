@@ -7,7 +7,7 @@ const Account = () => {
   return (
     <>
       <Header />
-      <div className="p-24 flex gap-16">
+      <div className= "p-6 md:p-24 md:flex-row flex-col flex gap-4 md:gap-16">
         <div>
           <button onClick={()=>{
             navigate("/account/additem")
@@ -27,6 +27,22 @@ const Account = () => {
                 d="M12 4.5v15m7.5-7.5h-15"
               />
             </svg>
+          </button>
+        </div>
+        <div>
+          <button onClick={()=>{
+            navigate("/account/yourItem")
+          }} className="text-xl flex gap-2 p-3 px-6 rounded-full  border border-black bg-white  hover:bg-black hover:text-white">
+            Your Items{" "}
+           
+          </button>
+        </div>
+        <div>
+          <button onClick={()=>{
+            navigate("/account/yourorders")
+          }} className="text-xl flex gap-2 p-3 px-6 rounded-full  border border-black bg-white  hover:bg-black hover:text-white">
+            Your Orders{" "}
+           
           </button>
         </div>
       </div>

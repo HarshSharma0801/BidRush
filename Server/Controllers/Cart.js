@@ -10,7 +10,7 @@ SaveCart.post('/savecart' ,AuthenticateToken,async(req,res)=>{
       
    const user = req.user;
    const data = req.body
-
+    
   const id = user.ExistingUser._id;
    
     try {
@@ -50,6 +50,7 @@ SaveCart.post('/savecart' ,AuthenticateToken,async(req,res)=>{
 SaveCart.get('/getcart' ,AuthenticateToken ,async(req,res)=>{
 
     const user = req.user;
+    console.log(user);
     const id = user.ExistingUser._id;
 
     try {

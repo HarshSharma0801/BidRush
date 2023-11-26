@@ -19,20 +19,21 @@ Auth.post('/signup' , async(req,res)=>{
         else{
        
             const hashedPassword = await bcrypt.hash(password,6);
-            await User.create({
+          const user =  await User.create({
                 name:name,
                 email:email,
                 password:hashedPassword
             })
-            const Userdata = {
+            const ExistingUser = {
+                _id:user._id,
                 name:name,
                 email:email,
                 password:hashedPassword
             }
-            const accessToken = jwt.sign({Userdata}, accessKey, { expiresIn: "2d" });
+            const accessToken = jwt.sign({ExistingUser}, accessKey, { expiresIn: "2d" });
 
             
-            res.status(200).json({ access:accessToken, valid:true , info:Userdata});
+            res.status(200).json({ access:accessToken, valid:true , info:ExistingUser});
 
         }
 
