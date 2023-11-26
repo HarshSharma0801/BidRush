@@ -8,6 +8,8 @@ const GetItems = () => {
   const getItems = async () => {
     await axios.get("/items").then((res) => {
       SetItems(res.data.items);
+      localStorage.removeItem("OrderToken");
+
     });
   };
 

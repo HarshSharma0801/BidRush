@@ -12,9 +12,10 @@ import Auction from "./Components/Auction/Auction"
 import YourItems from "./Components/YourItems/YourItems"
 import Success from "./Components/Pages/success"
 import YourOrders from "./Components/YourOrders/YourOrders"
+import Signout from "./Components/Pages/Logout"
 function App() {
 
-  axios.defaults.baseURL = "http://localhost:5000/"
+  axios.defaults.baseURL = "https://bid-rush.vercel.app/"
 
   const isShown = useSelector(state=>state.CartUI.isShown)
 
@@ -31,9 +32,11 @@ function App() {
    <Route path="/account/additem" element={<AddItem/>} />
    <Route path="/account/yourItem" element={<YourItems/>}/>
    <Route path="/account/yourorders" element={<YourOrders/>}/>
+   <Route path="/account/signout" element={<Signout/>} />
 
    <Route path="/auction" element={<Auction/>} />
    <Route path="/success" element={<Success/>} />
+
 
 
 

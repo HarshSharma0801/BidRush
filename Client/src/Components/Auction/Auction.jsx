@@ -218,7 +218,7 @@ const Auction = () => {
   const [ConfirmBid, SetConfirmBid] = useState(false);
   const [MakeBid, SetMakeBid] = useState(false);
 
-  const socket = io("http://localhost:5000/");
+  const socket = io("https://bid-rush.vercel.app/");
   
   
   const [auctionData , SetauctionData] = useState({
