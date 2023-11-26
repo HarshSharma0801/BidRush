@@ -1,25 +1,25 @@
 import express from "express";
-import AuthenticateToken from '../Middleware/AuthenticateUser.js';
+import AuthenticateToken from "../Middleware/AuthenticateUser.js";
 import Order from "../Modals/Orders.js";
 import jwt from "jsonwebtoken";
 
 const Key = process.env.REFRESH;
 
 const AuthenticateOrder = (req, res, next) => {
-    const token = req.headers["main"];
-  
-    if (!token) {
-      return res.sendStatus(401); // Unauthorized
+  const token = req.headers["main"];
+
+  if (!token) {
+    return res.sendStatus(401); // Unauthorized
+  }
+
+  jwt.verify(token, Key, (err, order) => {
+    if (err) {
+      return res.sendStatus(403); // Forbidden
     }
-  
-    jwt.verify(token, Key, (err, order) => {
-      if (err) {
-        return res.sendStatus(403); // Forbidden
-      }
-      req.order = order;
-      next();
-    });
-  };
+    req.order = order;
+    next();
+  });
+};
 
 const OrderItem = express();
 
@@ -31,10 +31,13 @@ OrderItem.post("/Booking", async (req, res) => {
   } catch (error) {}
 });
 
-OrderItem.get( "/BookingData",AuthenticateToken,AuthenticateOrder, async (req, res) => {
-
+OrderItem.get(
+  "/BookingData",
+  AuthenticateToken,
+  AuthenticateOrder,
+  async (req, res) => {
     const BookingData = req.order.data;
-    const id = req.user.ExistingUser._id ;
+    const id = req.user.ExistingUser._id;
     const today = new Date();
     const date =
       today.getDate() +
@@ -51,4 +54,15 @@ OrderItem.get( "/BookingData",AuthenticateToken,AuthenticateOrder, async (req, r
   }
 );
 
-export default OrderItem
+OrderItem.get("/yourorder", AuthenticateToken, async (req, res) => {
+  const CustomerId = req.user.ExistingUser._id;
+
+  try {
+    const data = await Order.find({ Customer: CustomerId });
+    res.status(200).json({ valid: true, orders: data });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+export default OrderItem;

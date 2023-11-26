@@ -37,6 +37,14 @@ const Account = () => {
            
           </button>
         </div>
+        <div>
+          <button onClick={()=>{
+            navigate("/account/yourorders")
+          }} className="text-xl flex gap-2 p-3 px-6 rounded-full  border border-black bg-white  hover:bg-black hover:text-white">
+            Your Orders{" "}
+           
+          </button>
+        </div>
       </div>
     </>
   );
