@@ -52,10 +52,10 @@ const Cart = () => {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.6)] flex items-center justify-center`}
+        className={`fixed top-0  inset-0 z-50 overflow-y-auto  left-0 right-0 bottom-0 bg-[rgba(0,0,0,0.6)] flex  items-center justify-center`}
       >
         <div
-          className={`relative flex flex-col gap-2 justify-center text-center bg-white rounded-[8px] w-[250px] md:w-[450px] p-4 `}
+          className={`relative  flex flex-col gap-2 justify-center text-center bg-white rounded-[8px] w-[250px] md:w-[450px] p-4 `}
         >
           <div
             onClick={RemoveCartUI}
@@ -82,8 +82,8 @@ const Cart = () => {
             {Items.map((Item) => {
               return (
                 <div className="flex justify-between border-b-2">
-                  <div className="flex gap-2">
-                    <div className="bg-gray-200 aspect-video md:w-[150px] md:h-[150px] w-[250px]  h-[308px] rounded-lg overflow-hidden">
+          <div className="flex gap-2">
+                    <div className="bg-gray-200 aspect-video md:w-[150px] md:mt-0 mt-5 md:h-[150px] w-[80px]  h-[60px] rounded-lg overflow-hidden">
                       <img
                         src={Item.image}
                         alt="photo"
@@ -98,7 +98,7 @@ const Cart = () => {
 
                   <div className="flex flex-col gap-2 py-6">
                     <div>
-                      <span className="h-6">₹ </span>{" "}
+                      <span className="h-6 text-sm">₹ </span>{" "}
                       {Item.price * Item.quantity}
                     </div>
                     <div className="flex gap-2 py-5">
@@ -109,7 +109,7 @@ const Cart = () => {
                             id: Item.id,
                           });
                         }}
-                        className="text-2xl px-4 py-2 border border-black hover:bg-black hover:text-white"
+                        className="md:text-2xl md:px-4 md:py-2 px-1 py-[0.15rem] border border-black hover:bg-black hover:text-white"
                       >
                         +
                       </button>
@@ -117,12 +117,12 @@ const Cart = () => {
                         onClick={() => {
                           RemoveItem(Item.id);
                         }}
-                        className="text-2xl border-black px-4 py-2 border hover:bg-black hover:text-white"
+                        className="md:backdrop:text-2xl border-black md:px-4 px-1 py-[0.15rem] md:py-2 border hover:bg-black hover:text-white"
                       >
                         -
                       </button>
                     </div>
-                  </div>
+                  </div> 
                 </div>
               );
             })}
@@ -136,7 +136,7 @@ const Cart = () => {
               </div>
               <div className="flex py-2 justify-center gap-2">
                 <div >
-                  <button className="p-3  text-lg bg-lightdark text-black rounded-xl ">
+                  <button className="md:p-3 p-1  md:text-lg bg-lightdark text-black rounded-xl ">
                     Buy Now
                   </button>
                 </div>
@@ -147,7 +147,7 @@ const Cart = () => {
                         totalItems:TotalItems,
                         totalPrice:TotalPrice
                     })
-                  }} className="p-3  text-lg text-black bg-light  rounded-xl">
+                  }} className="md:p-3 p-1  md:text-lg text-black bg-light  rounded-xl">
                     Save Changes
                   </button>
                 </div>

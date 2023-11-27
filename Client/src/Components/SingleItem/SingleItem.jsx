@@ -65,8 +65,14 @@ const SingleItem = () => {
             image:Item && Item.Images[0]
            }))
         }
+       
       })
     }
+    else{
+      navigate('/signin');
+
+    }
+   
    
   }
 
@@ -87,13 +93,14 @@ if(data && OrderDetails){
     let booking = res.data.OrderToken;
     localStorage.setItem("OrderToken" , booking)
   });
+  MakePayment();
 }
 else{
-  navigate('/singin')
+  navigate('/signin')
 }
   
 
-    MakePayment();
+   
 
   }
 
