@@ -5,7 +5,6 @@ import axios from "axios";
 const Success = ()=>{
     const [OrderData , SetOrderData] = useState();
 
-    console.log("hi")
 
     useEffect(()=>{
         const data = JSON.parse(localStorage.getItem("UserInfo"));

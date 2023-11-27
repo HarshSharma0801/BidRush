@@ -34,8 +34,8 @@ Payment.post('/Payment' , async(req,res)=>{
              
            mode: 'payment',
 
-           success_url:`http://localhost:5173/success`,
-           cancel_url: `http://localhost:5173/account`,
+           success_url:`https://bid-rush.vercel.app/success`,
+           cancel_url: `https://bid-rush.vercel.app/account`,
          });
        res.status(200).json({id:session.id , Details:Bookingdetails});
 
