@@ -1,6 +1,6 @@
 # BidRush
 
-BidRush is an Online Market Place where Users can register themselves ,  list items for sale, buy items from other users, and engage in real-time auctions for unique items , Transact Through Payment Gateway and make purchase .
+BidRush is an Online Market Place where Users can register themselves ,  list items for sale, buy items from other users, and engage in real-time auctions for unique items , Transact Through Payment Gateway and make purchase of items .
 
 ## Video
 
