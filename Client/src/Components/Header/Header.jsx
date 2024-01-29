@@ -147,7 +147,14 @@ const Header = () => {
           <div>
             <svg
               onClick={() => {
-                navigate("/account");
+                if(isData){
+                  navigate("/account");
+
+                }
+                else{
+                  navigate("/signin");
+
+                }
               }}
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
