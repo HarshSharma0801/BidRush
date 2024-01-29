@@ -1,6 +1,6 @@
 # BidRush
 
-BidRush is an Online Market Place where Users can register themselves ,  list items for sale, buy items from other users, and engage in real-time auctions for unique items , Transact Through Payment Gateway and make purchase .
+BidRush is an Online Market Place where Users can register themselves ,  list items for sale, buy items from other users, and engage in real-time auctions for unique items , Transact Through Payment Gateway and make purchase of items .
 
 ## Video
 
@@ -9,7 +9,7 @@ https://github.com/HarshSharma0801/BidRush/assets/121893196/80334417-6d59-41cd-b
 
 
 
-## Screeshots
+## Screenshots
 
 ![Screenshot (36)](https://github.com/HarshSharma0801/BidRush/assets/121893196/2865d7ae-ec44-4021-85fa-0f16efef3000)
 
